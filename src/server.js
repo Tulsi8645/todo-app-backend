@@ -43,7 +43,7 @@ const startServer = async () => {
 
         // Handle unhandled promise rejections
         process.on('unhandledRejection', (err) => {
-            logger.error('Unhandled Promise Rejection:', err);
+            logger.error({ err }, 'Unhandled Promise Rejection');
             server.close(() => {
                 process.exit(1);
             });
@@ -51,7 +51,7 @@ const startServer = async () => {
 
         // Handle uncaught exceptions
         process.on('uncaughtException', (err) => {
-            logger.error('Uncaught Exception:', err);
+            logger.error({ err }, 'Uncaught Exception');
             process.exit(1);
         });
 
@@ -60,7 +60,7 @@ const startServer = async () => {
         process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
     } catch (error) {
-        logger.error('Failed to start server:', error);
+        logger.error({ err: error }, 'Failed to start server');
         process.exit(1);
     }
 };
